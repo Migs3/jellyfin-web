@@ -171,6 +171,7 @@ const UserEdit = () => {
             (user.Policy?.RemoteClientBitrateLimit / 1e6).toLocaleString(undefined, { maximumFractionDigits: 6 }) : '';
         (page.querySelector('#txtLoginAttemptsBeforeLockout') as HTMLInputElement).value = String(user.Policy?.LoginAttemptsBeforeLockout) || '-1';
         (page.querySelector('#txtMaxActiveSessions') as HTMLInputElement).value = String(user.Policy?.MaxActiveSessions) || '0';
+        (page.querySelector('#txtMaxActiveStreams') as HTMLInputElement).value = String(user.Policy?.MaxActiveStreams) || '0';
         (page.querySelector('#selectSyncPlayAccess') as HTMLSelectElement).value = String(user.Policy?.SyncPlayAccess);
         loading.hide();
     }, [loadAuthProviders, loadPasswordResetProviders, loadDeleteFolders ]);
@@ -219,6 +220,7 @@ const UserEdit = () => {
             user.Policy.RemoteClientBitrateLimit = Math.floor(1e6 * parseFloat((page.querySelector('#txtRemoteClientBitrateLimit') as HTMLInputElement).value || '0'));
             user.Policy.LoginAttemptsBeforeLockout = parseInt((page.querySelector('#txtLoginAttemptsBeforeLockout') as HTMLInputElement).value || '0', 10);
             user.Policy.MaxActiveSessions = parseInt((page.querySelector('#txtMaxActiveSessions') as HTMLInputElement).value || '0', 10);
+            user.Policy.MaxActiveStreams = parseInt((page.querySelector('#txtMaxActiveStreams') as HTMLInputElement).value || '0', 10);
             user.Policy.AuthenticationProviderId = (page.querySelector('#selectLoginProvider') as HTMLSelectElement).value;
             user.Policy.PasswordResetProviderId = (page.querySelector('#selectPasswordResetProvider') as HTMLSelectElement).value;
             user.Policy.EnableContentDeletion = (page.querySelector('.chkEnableDeleteAllFolders') as HTMLInputElement).checked;
@@ -546,6 +548,23 @@ const UserEdit = () => {
                             </div>
                             <div className='fieldDescription'>
                                 {globalize.translate('OptionMaxActiveSessionsHelp')}
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div className='verticalSection'>
+                        <div className='inputContainer' id='fldMaxActiveStreams'>
+                            <InputElement
+                                type='number'
+                                id='txtMaxActiveStreams'
+                                label='LabelUserMaxActiveStreams'
+                                options={'min={0} step={1}'}
+                            />
+                            <div className='fieldDescription'>
+                                {globalize.translate('OptionMaxActiveStreams')}
+                            </div>
+                            <div className='fieldDescription'>
+                                {globalize.translate('OptionMaxActiveStreamsHelp')}
                             </div>
                         </div>
                     </div>
